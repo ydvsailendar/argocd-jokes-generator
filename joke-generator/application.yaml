@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: joke-generator
-  namespace: jokes
+  namespace: argocd
 spec:
   project: jokes
   source:

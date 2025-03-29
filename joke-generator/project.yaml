@@ -1,8 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationProject
+kind: AppProject
 metadata:
   name: jokes
-  namespace: jokes
+  namespace: argocd
 spec:
   description: "ArgoCD project for joke generator"
   destinations:
