@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationProject
+metadata:
+  name: jokes
+  namespace: jokes
+spec:
+  description: "ArgoCD project for joke generator"
+  destinations:
+    - namespace: jokes
+      server: https://kubernetes.default.svc
+  sourceRepos:
+    - "https://github.com/ydvsailendar/argocd-jokes-generator.git"
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

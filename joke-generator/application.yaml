@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: joke-generator
+  namespace: jokes
+spec:
+  project: jokes
+  source:
+    repoURL: "https://github.com/ydvsailendar/argocd-jokes-generator.git"
+    targetRevision: main
+    path: joke-generator
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: jokes
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

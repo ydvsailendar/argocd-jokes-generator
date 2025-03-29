@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  repository: europe-west2-docker.pkg.dev/devsecops-452321/devsecops-joke/joke-generator
+  tag: latest
+  pullPolicy: Always
+
+namespace: jokes
+
+service:
+  type: ClusterIP
+  port: 5000
+
+container:
+  port: 5000
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
