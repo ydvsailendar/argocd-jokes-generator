@@ -10,6 +10,9 @@ resource "google_container_cluster" "k8s" {
 
   node_config {
     disk_size_gb = 50
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/cloud-platform"
+    ]
   }
 
   workload_identity_config {

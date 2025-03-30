@@ -21,3 +21,6 @@ resources:
   requests:
     cpu: 50m
     memory: 64Mi
+
+serviceAccount:
+  name: gke-image-puller

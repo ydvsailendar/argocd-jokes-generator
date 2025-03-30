@@ -13,7 +13,7 @@ spec:
     metadata:
       labels: {{ include "joke-generator.labels" . | nindent 8 }}
     spec:
-      serviceAccountName: gke-image-puller
+      serviceAccountName: {{ .Values.serviceAccount.name }}
       containers:
         - name: joke-generator
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
