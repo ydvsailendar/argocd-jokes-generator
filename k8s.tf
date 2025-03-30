@@ -12,6 +12,10 @@ resource "google_container_cluster" "k8s" {
     disk_size_gb = 50
   }
 
+  workload_identity_config {
+    workload_pool = "${data.google_client_config.current.project}.svc.id.goog"
+  }
+
   lifecycle {
     ignore_changes = [node_config]
   }
