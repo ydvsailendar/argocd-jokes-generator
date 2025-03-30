@@ -14,12 +14,10 @@ resource "google_service_account" "artifactory" {
   project      = data.google_client_config.current.project
 }
 
-resource "google_project_iam_binding" "artifactory" {
+resource "google_project_iam_member" "artifactory_reader" {
   project = data.google_client_config.current.project
   role    = "roles/artifactregistry.reader"
-  members = [
-    "serviceAccount:${google_service_account.artifactory.email}"
-  ]
+  member  = "serviceAccount:${google_service_account.artifactory.email}"
 }
 
 resource "kubernetes_service_account" "k8s" {
@@ -37,13 +35,5 @@ resource "google_service_account_iam_binding" "k8s" {
   role               = "roles/iam.workloadIdentityUser"
   members = [
     "serviceAccount:${data.google_client_config.current.project}.svc.id.goog[${var.namespace}/gke-image-puller]"
-  ]
-}
-
-resource "google_project_iam_binding" "auth" {
-  project = data.google_client_config.current.project
-  role    = "roles/storage.objectViewer"
-  members = [
-    "serviceAccount:${google_service_account.artifactory.email}"
   ]
 }
