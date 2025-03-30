@@ -4,5 +4,5 @@ variable "name" {
 
 variable "namespace" {
   type    = string
-  default = "argocd"
+  default = "jokes"
 }
