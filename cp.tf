@@ -26,6 +26,9 @@ resource "kubernetes_service_account" "k8s" {
   metadata {
     name      = "gke-image-puller"
     namespace = var.namespace
+    annotations = {
+      "iam.gke.io/gcp-service-account" = "artifact-registry-sa@${data.google_client_config.current.project}.iam.gserviceaccount.com"
+    }
   }
 }
 
