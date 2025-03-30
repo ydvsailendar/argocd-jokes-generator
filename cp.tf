@@ -39,3 +39,11 @@ resource "google_service_account_iam_binding" "k8s" {
     "serviceAccount:${data.google_client_config.current.project}.svc.id.goog[${var.namespace}/gke-image-puller]"
   ]
 }
+
+resource "google_project_iam_binding" "auth" {
+  project = data.google_client_config.current.project
+  role    = "roles/storage.objectViewer"
+  members = [
+    "serviceAccount:${google_service_account.artifactory.email}"
+  ]
+}
