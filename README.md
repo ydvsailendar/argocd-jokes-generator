@@ -90,11 +90,21 @@ CRITICAL: ACTION REQUIRED: gke-gcloud-auth-plugin, which is needed for continued
 gcloud container clusters get-credentials devsecops-cluster --region europe-west2-a
 ```
 
-- verify current context
+- install kubectl -> <https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/>
+
+- install terraform -> <https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli>
+
+- set context to new cluster of gke
+
+```bash
+kubectl config set-context gke_devsecops-452321_europe-west2-a_devsecops-cluster
+```
+
+- check current context
 
 ```bash
 kubectl config current-context
-```
+``
 
 - get nodes
 
@@ -107,3 +117,116 @@ kubectl get nodes
 ```bash
 kubectl get ns
 ```
+
+- set preferred namespace
+
+```bash
+kubectl config set-context --current --namespace argocd
+```
+
+- check current namespace and cluster
+
+```bash
+# under current context check namespace
+kubectl config view --minify
+```
+
+## Argo CD
+
+- install argocd cli
+
+```bash
+brew install argocd
+``
+- create resources for argocd
+```bash
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
+- expose via service will give external ip
+
+```bash
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+```
+
+- get initial admin password
+
+```bash
+argocd admin initial-password -n argocd
+```
+
+- argocd login
+
+```bash
+argocd login 123.123.123.1
+```
+
+- update admin password
+
+```bash
+argocd account update-password
+```
+
+- add cluster (we are running in same cluster hence not needed)
+
+```bash
+argocd cluster add docker-desktop
+```
+
+- to login to the ui just copy paste the service load balancer ip
+
+## Jokes App
+
+- create project
+
+```bash
+kubectl apply -f joke-generator/project.yaml
+```
+
+- deploy app
+
+```bash
+kubectl apply -f joke-generator/application.yaml
+```
+
+```bash
+argocd app sync joke-generator
+```
+
+- to access the api it only has one get request at /jokes get the external ip of the service (this service is already of load balancer type during creation) and port of 5000
+
+```bash
+curl http://35.246.91.71:5000/jokes
+```
+
+## Kubernetes Dashboard
+
+- deploy dashboard
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+```
+
+- deploy service account and cluster role binding
+
+```bash
+kubectl apply -f joke-generator/dashboard.yaml
+```
+
+- expose via service will give external ip
+
+```bash
+kubectl patch svc kubernetes-dashboard -n kubernetes-dashboard -p '{"spec": {"type": "LoadBalancer"}}'
+```
+
+- to login generated token and visit the service external ip
+
+```bash
+kubectl -n kubernetes-dashboard create token admin-user
+```
+
+## AWS CLI
+
+- install -> <https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html>
+
+- setup -> <https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html>

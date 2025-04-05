@@ -21,6 +21,7 @@ resource "kubernetes_service_account" "k8s" {
       "iam.gke.io/gcp-service-account" = "${google_service_account.sa.email}"
     }
   }
+  depends_on = [kubernetes_namespace.jokes]
 }
 
 resource "google_service_account_iam_binding" "k8s" {

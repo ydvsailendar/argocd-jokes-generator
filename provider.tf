@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "2.36.0"
     }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.93.0"
+    }
   }
 }
 
@@ -21,4 +25,17 @@ provider "kubernetes" {
   host                   = "https://${google_container_cluster.k8s.endpoint}"
   cluster_ca_certificate = base64decode(google_container_cluster.k8s.master_auth.0.cluster_ca_certificate)
   token                  = data.google_client_config.current.access_token
+}
+
+provider "aws" {
+  region  = "eu-west-2"
+  profile = "sandbox"
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = "https://${google_container_cluster.k8s.endpoint}"
+    cluster_ca_certificate = base64decode(google_container_cluster.k8s.master_auth.0.cluster_ca_certificate)
+    token                  = data.google_client_config.current.access_token
+  }
 }

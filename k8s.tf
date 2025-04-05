@@ -38,3 +38,10 @@ resource "google_container_node_pool" "k8s" {
     oauth_scopes    = ["https://www.googleapis.com/auth/cloud-platform"]
   }
 }
+
+resource "kubernetes_namespace" "jokes" {
+  metadata {
+    name = var.namespace
+  }
+  depends_on = [google_container_cluster.k8s, google_container_node_pool.k8s]
+}
