@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "joke-generator.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels: {{ include "joke-generator.labels" . | nindent 4 }}
+  annotations:
+    networking.k8s.io/ingress.class: "gce"
+    networking.gke.io/managed-certificates: "jokes-ssl-cert"
+spec:
+  rules:
+    - host: jokes.devsecops.ydvsailendar.com
+      http:
+        paths:
+          - path: /
+            pathType: app
+            backend:
+              service:
+                name: {{ include "joke-generator.fullname" . }}
+                port:
+                  number: {{ .Values.service.port }}

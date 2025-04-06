@@ -118,6 +118,12 @@ kubectl get nodes
 kubectl get ns
 ```
 
+- create namespace
+
+```bash
+kubectl create ns argocd
+```
+
 - set preferred namespace
 
 ```bash
@@ -167,7 +173,7 @@ argocd login 123.123.123.1
 argocd account update-password
 ```
 
-- add cluster (we are running in same cluster hence not needed)
+- add cluster (we are running in same cluster hence not needed for this)
 
 ```bash
 argocd cluster add docker-desktop
@@ -193,10 +199,30 @@ kubectl apply -f joke-generator/application.yaml
 argocd app sync joke-generator
 ```
 
+- set context to jokes namespace
+
+```bash
+kubectl config set-context --current --namespace jokes
+```
+
+- get all resourcs in the namespace
+
+```bash
+kubectl get all
+```
+
+- copy the service external ip
+
 - to access the api it only has one get request at /jokes get the external ip of the service (this service is already of load balancer type during creation) and port of 5000
 
 ```bash
 curl http://35.246.91.71:5000/jokes
+```
+
+- to access web
+
+```bash
+open http://35.246.91.71:5000/
 ```
 
 ## Kubernetes Dashboard
@@ -207,11 +233,25 @@ curl http://35.246.91.71:5000/jokes
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 ```
 
+- set context to kubernetes-dashboard namespace
+
+```bash
+kubectl config set-context --current --namespace kubernetes-dashboard
+```
+
 - deploy service account and cluster role binding
 
 ```bash
 kubectl apply -f joke-generator/dashboard.yaml
 ```
+
+- get all resourcs in the namespace
+
+```bash
+kubectl get all
+```
+
+- copy the service external ip
 
 - expose via service will give external ip
 

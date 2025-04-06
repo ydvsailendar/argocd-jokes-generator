@@ -1,0 +1,9 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: {{ include "joke-generator.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels: {{ include "joke-generator.labels" . | nindent 4 }}
+spec:
+  domains:
+    - jokes.devsecops.ydvsailendar.com

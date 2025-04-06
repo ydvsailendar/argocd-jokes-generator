@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  namespace: argocd
+  annotations:
+    networking.k8s.io/ingress.class: "gce"
+    networking.gke.io/managed-certificates: "argocd-ssl-cert"
+spec:
+  rules:
+    - host: argocd.devsecops.ydvsailendar.com
+      http:
+        paths:
+          - path: /
+            pathType: argocd
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 443
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dashboard-ingress
+  namespace: kubernetes-dashboard
+  annotations:
+    networking.k8s.io/ingress.class: "gce"
+    networking.gke.io/managed-certificates: "dashboard-ssl-cert"
+spec:
+  rules:
+    - host: dashboard.devsecops.ydvsailendar.com
+      http:
+        paths:
+          - path: /
+            pathType: dashboard
+            backend:
+              service:
+                name: kubernetes-dashboard
+                port:
+                  number: 443

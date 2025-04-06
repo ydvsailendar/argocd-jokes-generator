@@ -1,7 +1,12 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 import pyjokes
 
 app = Flask(__name__)
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 @app.route("/jokes", methods=["GET"])

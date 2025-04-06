@@ -1,0 +1,18 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: argocd-ssl-cert
+  namespace: argocd
+spec:
+  domains:
+    - argocd.devsecops.ydvsailendar.com
+
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: dashboard-ssl-cert
+  namespace: kubernetes-dashboard
+spec:
+  domains:
+    - dashboard.devsecops.ydvsailendar.com
