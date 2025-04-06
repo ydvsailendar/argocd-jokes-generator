@@ -8,7 +8,7 @@ metadata:
     networking.gke.io/managed-certificates: "argocd-ssl-cert"
 spec:
   rules:
-    - host: argocd.devsecops.ydvsailendar.com
+    - host: k8s.devsecops.ydvsailendar.com
       http:
         paths:
           - path: /argocd
@@ -30,11 +30,11 @@ metadata:
     networking.gke.io/managed-certificates: "dashboard-ssl-cert"
 spec:
   rules:
-    - host: dashboard.devsecops.ydvsailendar.com
+    - host: k8s.devsecops.ydvsailendar.com
       http:
         paths:
           - path: /dashboard
-            pathType: prefix
+            pathType: Prefix
             backend:
               service:
                 name: kubernetes-dashboard

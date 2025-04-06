@@ -9,7 +9,7 @@ metadata:
     networking.gke.io/managed-certificates: "jokes-ssl-cert"
 spec:
   rules:
-    - host: jokes.devsecops.ydvsailendar.com
+    - host: k8s.devsecops.ydvsailendar.com
       http:
         paths:
           - path: /app
