@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
 spec:
   domains:
-    - argocd.devsecops.ydvsailendar.com
+    - k8s.devsecops.ydvsailendar.com
 
 ---
 apiVersion: networking.gke.io/v1
@@ -15,4 +15,4 @@ metadata:
   namespace: kubernetes-dashboard
 spec:
   domains:
-    - dashboard.devsecops.ydvsailendar.com
+    - k8s.devsecops.ydvsailendar.com

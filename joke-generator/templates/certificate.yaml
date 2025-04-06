@@ -6,4 +6,4 @@ metadata:
   labels: {{ include "joke-generator.labels" . | nindent 4 }}
 spec:
   domains:
-    - jokes.devsecops.ydvsailendar.com
+    - k8s.devsecops.ydvsailendar.com
