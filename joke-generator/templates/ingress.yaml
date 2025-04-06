@@ -12,8 +12,8 @@ spec:
     - host: jokes.devsecops.ydvsailendar.com
       http:
         paths:
-          - path: /
-            pathType: app
+          - path: /app
+            pathType: Prefix
             backend:
               service:
                 name: {{ include "joke-generator.fullname" . }}

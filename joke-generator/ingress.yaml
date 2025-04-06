@@ -11,8 +11,8 @@ spec:
     - host: argocd.devsecops.ydvsailendar.com
       http:
         paths:
-          - path: /
-            pathType: argocd
+          - path: /argocd
+            pathType: Prefix
             backend:
               service:
                 name: argocd-server
@@ -33,8 +33,8 @@ spec:
     - host: dashboard.devsecops.ydvsailendar.com
       http:
         paths:
-          - path: /
-            pathType: dashboard
+          - path: /dashboard
+            pathType: prefix
             backend:
               service:
                 name: kubernetes-dashboard
